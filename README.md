@@ -1,3 +1,5 @@
+> 🙏 感謝 **三師爸**，本專案來源來自 [三師爸](https://github.com/mathruffian-dot/voxcpm2-voice-cloner)。原始專案提供 VoxCPM2 的自動安裝、錄音與克隆工具鏈。
+
 # VoxCPM2 Voice Cloner
 
 用 VoxCPM2 克隆你的聲音，生成任意語音。全自動安裝，自動偵測 GPU / MPS。
