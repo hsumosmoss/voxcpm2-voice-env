@@ -18,7 +18,8 @@ output/
 # 聲音資料夾（每個人的參考音與逐字稿，本地保留但不進版控）
 voices/
 
-# GPU 類型標記
+# 裝置類型標記
+.device_type
 .gpu_type
 
 # Python

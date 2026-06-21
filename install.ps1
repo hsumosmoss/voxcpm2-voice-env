@@ -119,9 +119,10 @@ switch ($gpuType) {
 }
 Write-Host ''
 Write-Host '下一步：' -ForegroundColor Cyan
-Write-Host '  1. 錄製參考音：.\.venv\Scripts\python.exe record.py'
-Write-Host '  2. 生成語音：.\.venv\Scripts\python.exe clone.py "你想說的文字"'
+Write-Host '  Windows: .\.venv\Scripts\python.exe record.py'
+Write-Host '  macOS:   .venv/bin/python3 record.py'
 Write-Host ''
 
 # 儲存 GPU 類型供其他腳本讀取
+[IO.File]::WriteAllText((Join-Path $PSScriptRoot '.device_type'), $gpuType)
 [IO.File]::WriteAllText((Join-Path $PSScriptRoot '.gpu_type'), $gpuType)

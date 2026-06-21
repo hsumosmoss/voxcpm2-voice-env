@@ -20,22 +20,21 @@ import argparse
 REPO_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def detect_device():
-    """從 install.ps1 產生的 .gpu_type 讀取，或自動偵測。"""
-    gpu_type_file = os.path.join(REPO_DIR, '.gpu_type')
-    if os.path.exists(gpu_type_file):
-        with open(gpu_type_file, 'r', encoding='utf-8') as f:
-            gpu_type = f.read().strip()
-    else:
-        import torch
-        if torch.cuda.is_available():
-            gpu_type = 'cuda'
-        elif hasattr(torch, 'xpu') and torch.xpu.is_available():
-            gpu_type = 'xpu'
-        else:
-            gpu_type = 'cpu'
+    """從 install.ps1 / install.sh 產生的 .device_type 或 .gpu_type 讀取，或自動偵測。"""
+    for marker in ['.device_type', '.gpu_type']:
+        path = os.path.join(REPO_DIR, marker)
+        if os.path.exists(path):
+            with open(path, 'r', encoding='utf-8') as f:
+                return f.read().strip()
 
-    device_map = {'cuda': 'cuda', 'xpu': 'xpu', 'cpu': 'cpu'}
-    return device_map.get(gpu_type, 'cpu')
+    import torch
+    if torch.cuda.is_available():
+        return 'cuda'
+    if hasattr(torch, 'xpu') and torch.xpu.is_available():
+        return 'xpu'
+    if hasattr(torch.backends, 'mps') and torch.backends.mps.is_available():
+        return 'mps'
+    return 'cpu'
 
 
 def resolve_voice_files(voice, reference_override, text_override):
